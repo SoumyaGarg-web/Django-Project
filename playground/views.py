@@ -16,7 +16,7 @@ from django.db.models import Value
 
 def say_hello(request):
     # x = calculate()
-    queryset = Customer.objects.annotate(is_new=Value(True))
+    queryset = Customer.objects.annotate(new_id=F('id'))
 
     return render(request, 'hello.html', {'name': 'Soumya', 'result': list(queryset)})
     # return HttpResponse('Hello World')
