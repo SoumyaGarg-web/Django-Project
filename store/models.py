@@ -49,6 +49,7 @@ class Customer(models.Model):
     birth_date = models.DateField(null=True)
     membership = models.CharField(
         max_length=1, choices=MEMEBERSHIP_CHOICES, default=MEMEBERSHIP_BRONZE)
+    # order_set(reverse relationship with Order class)
 
 
 class Order(models.Model):
