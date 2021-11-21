@@ -14,7 +14,9 @@ from tags.models import TaggedItem
 
 def say_hello(request):
 
-    queryset = TaggedItem.objects.get_tags_for(Product, 1)
+    queryset = Product.objects.all()
+    list(queryset)
+    queryset[0]
 
     return render(request, 'hello.html', {'name': 'Soumya', 'result': list(queryset)})
     # return HttpResponse('Hello World')
