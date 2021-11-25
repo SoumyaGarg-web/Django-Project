@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, F, Func, Value, ExpressionWrapper
 from django.http import HttpResponse
 from django.db.models.aggregates import Count, Avg, Max, Min
-from store.models import Customer, Order, OrderItem, Product
+from store.models import Collection, Customer, Order, OrderItem, Product
 from django.db.models.functions import Concat
 from django.contrib.contenttypes.models import ContentType
 from store.models import Product
@@ -14,9 +14,9 @@ from tags.models import TaggedItem
 
 def say_hello(request):
 
-    queryset = Product.objects.all()
-    list(queryset)
-    queryset[0]
+    collection = Collection()
+    collection.title = 'Video games'
+    collection.featured_product = Product(pk=1)
+    collection.save()
 
-    return render(request, 'hello.html', {'name': 'Soumya', 'result': list(queryset)})
-    # return HttpResponse('Hello World')
+    return render(request, 'hello.html', {'name': 'Soumya'})
