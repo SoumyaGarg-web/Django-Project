@@ -14,9 +14,9 @@ from tags.models import TaggedItem
 
 def say_hello(request):
 
-    collection = Collection()
-    collection.title = 'Video games'
-    collection.featured_product = Product(pk=1)
+    collection = Collection(pk=1)
+    collection.title = 'Games'
+    collection.featured_product = None
     collection.save()
 
     return render(request, 'hello.html', {'name': 'Soumya'})
