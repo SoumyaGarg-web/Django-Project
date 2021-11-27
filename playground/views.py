@@ -14,6 +14,7 @@ from tags.models import TaggedItem
 
 def say_hello(request):
 
-    collection = Collection.objects.filter(pk=1).update(featured_product=None)
+    collection = Collection(pk=1)
+    collection.delete()
 
     return render(request, 'hello.html', {'name': 'Soumya'})
