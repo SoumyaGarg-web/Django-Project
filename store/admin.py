@@ -1,4 +1,6 @@
 import collections
+from re import search
+
 from django.contrib import admin, messages
 from . import models
 from django.db.models.aggregates import Count
@@ -22,6 +24,7 @@ class InventoryFilter(admin.SimpleListFilter):
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
+    search_fields = ['title']
     autocomplete_fields = ['collection']
     prepopulated_fields = {
         'slug': ['title']
@@ -102,8 +105,17 @@ class CollectionAdmin(admin.ModelAdmin):
 # set up order page where we can see orders and their customers
 
 
+class OrdenItemInline(admin.StackedInline):
+    model = models.OrderItem
+    autocomplete_fields = ['product']
+    extra = 0
+    min_num = 1
+    max_num = 10
+
+
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'placed_at', 'customer']
     autocomplete_fields = ['customer']
     list_select_related = ['customer']
+    inlines = [OrdenItemInline]
