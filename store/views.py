@@ -1,3 +1,4 @@
+from crypt import methods
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
@@ -25,7 +26,7 @@ def product_list(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['GET','PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def product_details(request, id):
     product = get_object_or_404(Product, pk=id)
     if request.method == 'GET':
@@ -36,7 +37,11 @@ def product_details(request, id):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-
+    elif request.method == 'DELETE':
+        if product.orderitems.count() > 0:
+            return Response({'ERROR': 'Product can not be deleted because it is associated with order item'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view()
